@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head">
+</head>
+<body>
+	<header th:replace="template :: header"></header>
+
+	<div class="container">
+	
+	<div class="card bg-light">
+		<div class="card-header bg-dark text-white" th:text="${title}"></div>
+		<div class="card-body">
+	
+		<form th:action="@{/views/clientes/save}" th:object="${customer}" method="post">
+			<div class="form-group row">
+				
+				<input type="hidden" th:field="*{id}">
+				<label class="col-md-2" for="name">Nombres:</label>
+				<input type="text" th:field="*{name}" class="form-control form-control-sm col-md-6" id="name"
+					placeholder="Nombres del cliente"> 
+					<small class="form-text text-danger" th:if="${#fields.hasErrors('name')}"
+						th:errors="*{name}">
+					</small>
+			</div>
+			
+			<div class="form-group row">
+				<label class="col-md-2" for="last_name">Apellidos:</label>
+				<input type="text" th:field="*{last_name}" class="form-control form-control-sm col-md-6" id="last_name"
+					placeholder="Apellidos del cliente"> 
+					<small class="form-text text-danger" th:if="${#fields.hasErrors('last_name')}"
+						th:errors="*{last_name}">
+					</small>
+			</div>
+			
+			<div class="form-group row">
+				<label class="col-md-2" for="phone">Teléfono</label>
+				<input type="text"  th:field="*{phone}" class="form-control form-control-sm col-md-6" id="phone"
+					placeholder="Telefono del cliente"> 
+					<small class="form-text text-danger" th:if="${#fields.hasErrors('phone')}"
+						th:errors="*{phone}">
+					</small>
+			</div>
+			
+			<div class="form-group row">
+				<label class="col-md-2" for="email">Email:</label> 
+				<input type="text" th:field="*{email}" class="form-control form-control-sm col-md-6" id="email"
+					placeholder="Email del cliente"> 
+					<small class="form-text text-danger" th:if="${#fields.hasErrors('email')}"
+						th:errors="*{email}">
+					</small>
+			</div>
+			
+			<div class="form-group row">
+				<label class="col-md-2" for="ciudad">Ciudad:</label>
+				<select th:field="*{city}" class="form-control form-control-sm col-md-6" id="ciudad">
+					<option th:each="city:${cities}"
+						th:value="${city.id}"
+						th:text="${city.name}"
+					/>					
+				</select>
+			</div>
+			
+			<div class="card-footer bg-dark">
+				<input type="submit" class="btn btn-primary btn-sm" value="Guardar">
+				<input type="button" class="btn btn-secondary btn-sm" onclick="goBack()" value="Cancelar">
+			</div>
+
+		</form>
+		</div>
+	</div>
+
+	</div>
+
+	<footer th:replace="template :: footer"></footer>
+	<script>
+		function goBack(){
+			window.history.back();
+		}
+	</script>
+</body>
+</html>
