@@ -13,7 +13,7 @@ public class CustomerServiceImpl implements CustomerService
 {
 	@Autowired
 	private CustomerRepository customerRepository;
-	
+
 	@Override
 	public List<Customer> findAll() {
 		return (List<Customer>) customerRepository.findAll();

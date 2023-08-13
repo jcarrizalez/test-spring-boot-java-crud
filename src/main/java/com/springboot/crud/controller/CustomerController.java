@@ -1,20 +1,24 @@
 package com.springboot.crud.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
+import javax.swing.*;
 import javax.validation.Valid;
 
 import com.springboot.crud.models.entity.City;
 import com.springboot.crud.models.entity.Customer;
+import com.springboot.crud.models.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springboot.crud.models.service.CityService;
@@ -29,6 +33,9 @@ public class CustomerController
 
 	@Autowired
 	private CityService cityService;
+
+	@Autowired
+	private FileService fileService;
 
 	@GetMapping("")
 	public String index(Model model) {
@@ -55,7 +62,7 @@ public class CustomerController
 
 	@PostMapping("/save")
 	public String save(@Valid @ModelAttribute Customer customer, BindingResult result,
-					   Model model, RedirectAttributes attribute) {
+					   Model model, @RequestParam("file") MultipartFile image, RedirectAttributes attribute) {
 		List<City> cities = cityService.findAll();
 
 		if (result.hasErrors()) {
@@ -65,6 +72,8 @@ public class CustomerController
 			System.out.println("Existieron errores en el formulario");
 			return "/views/clientes/frmCrear";
 		}
+		String nameImg = fileService.saveStatic(image);
+		customer.setImage(nameImg);
 
 		customerService.save(customer);
 		System.out.println("Cliente guardado con exito!");

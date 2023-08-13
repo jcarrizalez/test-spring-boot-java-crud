@@ -41,6 +41,8 @@ public class Customer implements Serializable
 	@NotEmpty
 	@Email
 	private String email;
+
+	private String image;
 	
 	@ManyToOne
 	@JoinColumn(name="city_id")
@@ -49,6 +51,6 @@ public class Customer implements Serializable
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", name=" + name + ", last_name=" + last_name + ", phone=" + phone
-				+ ", email=" + email + ", city=" + city + "]";
+				+ ", email=" + email + ", city=" + image + ", image=" + image + "]";
 	}
 }

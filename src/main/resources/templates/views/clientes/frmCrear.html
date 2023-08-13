@@ -11,7 +11,7 @@
 		<div class="card-header bg-dark text-white" th:text="${title}"></div>
 		<div class="card-body">
 	
-		<form th:action="@{/views/clientes/save}" th:object="${customer}" method="post">
+		<form th:action="@{/views/clientes/save}" th:object="${customer}" method="post" enctype="multipart/form-data">
 			<div class="form-group row">
 				
 				<input type="hidden" th:field="*{id}">
@@ -40,7 +40,7 @@
 						th:errors="*{phone}">
 					</small>
 			</div>
-			
+
 			<div class="form-group row">
 				<label class="col-md-2" for="email">Email:</label> 
 				<input type="text" th:field="*{email}" class="form-control form-control-sm col-md-6" id="email"
@@ -59,7 +59,18 @@
 					/>					
 				</select>
 			</div>
-			
+
+			<div class="form-group row">
+				<label class="col-md-2" for="file">Imagen: </label>
+				<div class="form-group row">
+					<input type="file" name="file" class="form-control form-control-sm col-md-6" id="file" placeholder="">
+
+					<img class="img-thumbnail rounded float-left"
+						 th:src="*{(image != null && !#strings.isEmpty(image)) ? '/images/customers/' + image : '/images/not_img.png'}"
+						 th:alt="*{image}"
+						 style="max-width: 150px;"/>
+				</div>
+			</div>
 			<div class="card-footer bg-dark">
 				<input type="submit" class="btn btn-primary btn-sm" value="Guardar">
 				<input type="button" class="btn btn-secondary btn-sm" onclick="goBack()" value="Cancelar">
